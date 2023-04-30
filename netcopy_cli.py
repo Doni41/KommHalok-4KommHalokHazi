@@ -35,7 +35,6 @@ class NetcopyClient:
 
         self.lines_as_string = b"".join([line for line in self.lines])
 
-
         print('File lines: ', self.lines)
         print('Print as string: ', self.lines_as_string)
         
@@ -49,18 +48,18 @@ class NetcopyClient:
 
     def communicateWithChecksum(self):
         # BE|< fájl azon. >|< érvényesség másodpercben >|< checksum hossza bájtszámban >|< checksum bájtjai >
-        msg = 'Be|{}|{}|{}|{}'.format(self.file_id, self.time_limit, 16, self.m)
+        msg = 'Be|{}|{}|{}|{}'.format(self.file_id, self.time_limit, 16, self.m.hexidigest())
         self.sock.connect((self.chsum_srv_ip, self.chsum_srv_port))
-        self.sock.send(msg)
+        self.sock.send(msg.encode())
         answer = self.sock.recv(1024)
-        print(answer.encode())
+        print(answer.decode())
         
     
     def createChecksum(self):
         # self.m = hashlib.md5(self.lines)
         self.m = hashlib.md5(self.lines_as_string)
 
-        print('MD5: ', self.m)
+        print('MD5: ', self.m.hexdigest())
 
     def initVariables(self):
         self.packer = struct.Struct('i i 16s i')

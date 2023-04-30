@@ -61,7 +61,7 @@ class NetcopyServer:
         # KI|< fajl azonosito >
         msg = 'KI|{}'.format(self.file_id)
         self.sock.connect((self.chsum_srv_ip, self.chsum_srv_port))
-        self.sock.send(msg)
+        self.sock.send(msg.encode())
         answer = self.sock.recv(1024).decode()
         parsed_answ = answer.split('|')
         if answer == '0|' or parsed_answ[1] != self.m.hexdigest():
@@ -110,6 +110,5 @@ class NetcopyServer:
         self.lines_as_string = ''
         self.m = ''
     
-
 netcopy_server = NetcopyServer(sys.argv[1], int(sys.argv[2]), sys.argv[3], int(sys.argv[4]), int(sys.argv[5]), sys.argv[6])
 netcopy_server.startNetcopyServer()
