@@ -30,7 +30,7 @@ class NetcopyServer:
 
     # all netcopy server loginc
     def netcopyServerLogic(self):
-        print('Valaki csatlakozott,: ', self.addr)
+        # print('Valaki csatlakozott,: ', self.addr)
 
         self.readFromClient()
         self.writeToFile()
@@ -41,7 +41,7 @@ class NetcopyServer:
     def readFromClient(self):
         while True:
             msg = self.conn.recv(1024)
-            print(msg)
+            # print(msg)
             self.file_lines.append(msg)
             if not msg:
                 break
@@ -49,8 +49,8 @@ class NetcopyServer:
 
         self.lines_as_string = b"".join([line for line in self.file_lines])
 
-        print('File lines: ', self.file_lines)
-        print('Lines as string: ', self.lines_as_string)
+        # print('File lines: ', self.file_lines)
+        # print('Lines as string: ', self.lines_as_string)
 
         self.conn.close()
     
@@ -58,12 +58,12 @@ class NetcopyServer:
     def readAsString(self):
         while True:
             msg = self.conn.recv(1024)
-            print(msg)
+            # print(msg)
             self.file_lines += msg
             if msg.decode() == '':
                 break
 
-            print('File lines: ', self.file_lines)
+            # print('File lines: ', self.file_lines)
 
         self.conn.close()
 
@@ -71,12 +71,12 @@ class NetcopyServer:
     def readAsOneString(self):
         while True:
             msg = self.conn.recv(1024)
-            print(msg)
+            # print(msg)
             self.file_lines += msg
             if msg.decode() == '':
                 break
 
-            print('File lines: ', self.file_lines)
+            # print('File lines: ', self.file_lines)
 
         self.conn.close()
 
@@ -89,17 +89,17 @@ class NetcopyServer:
     # createing md5 checksum
     def createChecksum(self):
         self.m = hashlib.md5(self.lines_as_string)
-        print('MD5', self.m)
+        # print('MD5', self.m)
 
     # getting data from chekcsum server
     def communicateWithChecksum(self):
-        print('send to checksum server')
+        # print('send to checksum server')
         # KI|< fajl azonosito >
         msg = 'KI|{}'.format(self.file_id)
         self.sock2.connect((self.chsum_srv_ip, self.chsum_srv_port))
         self.sock2.send(msg.encode())
         answer = self.sock2.recv(1024).decode()
-        print('answer: ', answer)
+        # print('answer: ', answer)
         parsed_answ = answer.split('|')
         if answer == '0|' or parsed_answ[1] != self.m.hexdigest():
             print('CSUM CORRUPTED')

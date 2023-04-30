@@ -42,8 +42,8 @@ class NetcopyClient:
 
         self.lines_as_string = b"".join([line for line in self.lines])
 
-        print('File lines: ', self.lines)
-        print('Print as string: ', self.lines_as_string)
+        # print('File lines: ', self.lines)
+        # print('Print as string: ', self.lines_as_string)
         
     # sending binary file to the netcopy server
     def sendBinaryFiles(self):
@@ -67,7 +67,7 @@ class NetcopyClient:
         self.sock2.connect((self.chsum_srv_ip, self.chsum_srv_port))
         self.sock2.send(msg.encode())
         answer = self.sock2.recv(1024)
-        print('Asnwer: ', answer.decode())
+        # print('Asnwer: ', answer.decode())
         self.sock2.close()
     
     # socket initialization

@@ -26,7 +26,7 @@ class ChecksumServer:
                     # break
                 for s in readables:
                     if s is self.proxy:
-                        print('kliens vagy szerver csatalkozik')
+                        # print('kliens vagy szerver csatalkozik')
                         client, client_addr = s.accept()
                         self.inputs.append(client)
                     else:
@@ -36,7 +36,7 @@ class ChecksumServer:
                             s.close()
                         else:
                             msg = data.decode().split('|')
-                            print(msg)
+                            # print(msg)
                             if msg[0] == 'BE':
                                 self.readFromClient(s, msg)
                             elif msg[0] == 'KI':
@@ -46,7 +46,7 @@ class ChecksumServer:
             except KeyboardInterrupt:
                 for s in self.inputs:
                     s.close()
-                print("Checksum closing")
+                # print("Checksum closing")
                 break
     
     def readFromClient(self, s, msg):
@@ -84,7 +84,7 @@ class ChecksumServer:
 
     def createNewChecksum(self, file_id, time_limit, byte_length, checksum):
         self.checksums[file_id] = {'time_limit': time_limit, 'byte_length': byte_length, 'checksum': checksum, 'start_time': time.time()}
-        print('created: ', self.checksums)
+        # print('created: ', self.checksums)
 
 
 checksum_server = ChecksumServer(sys.argv[1], int(sys.argv[2]))
